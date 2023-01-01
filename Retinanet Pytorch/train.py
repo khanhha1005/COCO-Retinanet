@@ -8,7 +8,7 @@ import torch.optim as optim
 from torchvision import transforms
 
 from Model import model
-from Model.dataloader import CocoDataset, CSVDataset, collater, Resizer, AspectRatioBasedSampler, Augmenter, \
+from Model.dataloader import CocoDataset, collater, Resizer, AspectRatioBasedSampler, Augmenter, \
     Normalizer
 from torch.utils.data import DataLoader
 
