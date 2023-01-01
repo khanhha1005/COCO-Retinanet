@@ -48,9 +48,8 @@ def main(args=None):
     sampler = AspectRatioBasedSampler(dataset_train, batch_size=2, drop_last=False)
     dataloader_train = DataLoader(dataset_train, num_workers=2, collate_fn=collater, batch_sampler=sampler)
 
-    if dataset_val is not None:
-        sampler_val = AspectRatioBasedSampler(dataset_val, batch_size=1, drop_last=False)
-        dataloader_val = DataLoader(dataset_val, num_workers=2, collate_fn=collater, batch_sampler=sampler_val)
+    sampler_val = AspectRatioBasedSampler(dataset_val, batch_size=1, drop_last=False)
+    dataloader_val = DataLoader(dataset_val, num_workers=2, collate_fn=collater, batch_sampler=sampler_val)
 
     # Create the model
     if parser.depth == 18:
@@ -134,9 +133,9 @@ def main(args=None):
                 print(e)
                 continue
 
-        if parser.dataset == 'coco':
-            print('Evaluating dataset')
-            coco_eval.evaluate_coco(dataset_val, retinanet)
+        print('Evaluating dataset')
+        coco_eval.evaluate_coco(dataset_val, retinanet)
+        print('Saving model after one epochs')
 
 
 
