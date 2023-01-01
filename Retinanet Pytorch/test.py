@@ -19,11 +19,11 @@ def main(args=None):
 
     parser = parser.parse_args(args)
 
-    dataset_val = CocoDataset(parser.coco_path, set_name='val2017',
+    dataset_test = CocoDataset(parser.coco_path, set_name='val2017',
                               transform=transforms.Compose([Normalizer(), Resizer()]))
 
     # Create the model
-    retinanet = model.resnet50(num_classes=dataset_val.num_classes(), pretrained=True)
+    retinanet = model.resnet50(num_classes=dataset_test.num_classes(), pretrained=True)
 
     use_gpu = True
 
@@ -42,7 +42,7 @@ def main(args=None):
     retinanet.eval()
     retinanet.module.freeze_bn()
 
-    coco_eval.evaluate_coco(dataset_val, retinanet)
+    coco_eval.evaluate_coco(dataset_test, retinanet)
 
 
 if __name__ == '__main__':
