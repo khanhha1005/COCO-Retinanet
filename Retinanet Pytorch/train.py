@@ -135,9 +135,7 @@ def main(args=None):
                 continue
 
         if parser.dataset == 'coco':
-
             print('Evaluating dataset')
-
             coco_eval.evaluate_coco(dataset_val, retinanet)
 
 
