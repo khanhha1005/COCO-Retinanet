@@ -116,4 +116,4 @@ if __name__ == '__main__':
     parser.add_argument('--model_path', help='Path to model')
     parser = parser.parse_args()
 
-    detect_image(parser.image_dir, parser.model_path, parser.class_list)
+    detect_image(parser.image_dir, parser.model_path)
