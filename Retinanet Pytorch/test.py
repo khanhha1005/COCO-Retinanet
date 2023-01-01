@@ -2,9 +2,9 @@ import argparse
 import torch
 from torchvision import transforms
 
-from retinanet import model
-from retinanet.dataloader import CocoDataset, Resizer, Normalizer
-from retinanet import coco_eval
+from Model import model
+from Model.dataloader import CocoDataset, Resizer, Normalizer
+from Model import coco_eval
 
 assert torch.__version__.split('.')[0] == '1'
 

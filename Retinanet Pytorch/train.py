@@ -2,18 +2,17 @@ import argparse
 import collections
 
 import numpy as np
-
+import time
 import torch
 import torch.optim as optim
 from torchvision import transforms
 
-from retinanet import model
-from retinanet.dataloader import CocoDataset, CSVDataset, collater, Resizer, AspectRatioBasedSampler, Augmenter, \
+from Model import model
+from Model.dataloader import CocoDataset, CSVDataset, collater, Resizer, AspectRatioBasedSampler, Augmenter, \
     Normalizer
 from torch.utils.data import DataLoader
 
-from retinanet import coco_eval
-from retinanet import csv_eval
+from Model import coco_eval
 
 assert torch.__version__.split('.')[0] == '1'
 
@@ -90,6 +89,8 @@ def main(args=None):
     print('Num training images: {}'.format(len(dataset_train)))
 
     for epoch_num in range(parser.epochs):
+        print("Epoch - {} Started".format(epoch_num))
+        st = time.time()
 
         retinanet.train()
         retinanet.module.freeze_bn()
@@ -132,7 +133,8 @@ def main(args=None):
             except Exception as e:
                 print(e)
                 continue
-
+        et = time.time()
+        print("\n Total Time - {}\n".format(int(et - st)))
         print('Evaluating dataset')
         coco_eval.evaluate_coco(dataset_val, retinanet)
         print('Saving model after one epochs')
