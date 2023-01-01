@@ -35,8 +35,12 @@ class CocoDataset(Dataset):
         self.transform = transform
         if self.set_name == 'val2017':
           self.coco      = COCO(os.path.join(self.root_dir, 'annotations', 'instances_val2017.json'))
+        elif self.set_name == 'train2017':
+          self.coco      = COCO(os.path.join(self.root_dir, 'annotations', 'instances_train2017.json'))
+        # if using validation 
         else:
           self.coco      = COCO(os.path.join(self.root_dir, 'annotations', 'random_coco_split_' + self.set_name + '.json'))
+        
         self.image_ids = self.coco.getImgIds()
 
         self.load_classes()

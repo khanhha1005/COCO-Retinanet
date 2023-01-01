@@ -35,11 +35,12 @@ def main(args=None):
 
         if parser.coco_path is None:
             raise ValueError('Must provide --coco_path when training on COCO,')
-
-        dataset_train = CocoDataset(parser.coco_path, set_name='train',
+        dataset_train = CocoDataset(parser.coco_path, set_name='train2017',
                                     transform=transforms.Compose([Normalizer(), Augmenter(), Resizer()]))
-        dataset_val = CocoDataset(parser.coco_path, set_name='val',
-                                  transform=transforms.Compose([Normalizer(), Resizer()]))
+        # dataset_train = CocoDataset(parser.coco_path, set_name='train',
+        #                             transform=transforms.Compose([Normalizer(), Augmenter(), Resizer()]))
+        # dataset_val = CocoDataset(parser.coco_path, set_name='val',
+        #                           transform=transforms.Compose([Normalizer(), Resizer()]))
         dataset_test = CocoDataset(parser.coco_path, set_name='val2017',
                                 transform=transforms.Compose([Normalizer(), Resizer()]))
 
@@ -48,9 +49,9 @@ def main(args=None):
 
     sampler = AspectRatioBasedSampler(dataset_train, batch_size=2, drop_last=False)
     dataloader_train = DataLoader(dataset_train, num_workers=2, collate_fn=collater, batch_sampler=sampler)
-
-    sampler_val = AspectRatioBasedSampler(dataset_val, batch_size=2, drop_last=False)
-    dataloader_val = DataLoader(dataset_val, num_workers=2, collate_fn=collater, batch_sampler=sampler_val)
+    # Using validation set 
+    # sampler_val = AspectRatioBasedSampler(dataset_val, batch_size=2, drop_last=False)
+    # dataloader_val = DataLoader(dataset_val, num_workers=2, collate_fn=collater, batch_sampler=sampler_val)
 
 
     # Create the model
@@ -140,37 +141,37 @@ def main(args=None):
         et = time.time()
         print("\n Total Time - {}\n".format(int(et - st)))
         scheduler.step(np.mean(epoch_loss))
-
-        print('Start Validation Process')
-        print("Epoch - {} Started".format(epoch_num))
-        st1 = time.time()
+        #### USING VALIDATION #####
+        # print('Start Validation Process')
+        # print("Epoch - {} Started".format(epoch_num))
+        # st1 = time.time()
         
-        epoch_loss_validation = []
+        # epoch_loss_validation = []
 
-        for iter_num, data in enumerate(dataloader_val):
+        # for iter_num, data in enumerate(dataloader_val):
                     
-            with torch.no_grad():
+        #     with torch.no_grad():
                 
-                # Forward
-                classification_loss, regression_loss = retinanet([data['img'].cuda().float(), data['annot'].cuda().float()])
+        #         # Forward
+        #         classification_loss, regression_loss = retinanet([data['img'].cuda().float(), data['annot'].cuda().float()])
 
-                # Calculating Loss
-                classification_loss = classification_loss.mean()
-                regression_loss = regression_loss.mean()
-                loss = classification_loss + regression_loss
+        #         # Calculating Loss
+        #         classification_loss = classification_loss.mean()
+        #         regression_loss = regression_loss.mean()
+        #         loss = classification_loss + regression_loss
 
-                #Epoch Loss
-                epoch_loss_validation.append(float(loss))
+        #         #Epoch Loss
+        #         epoch_loss_validation.append(float(loss))
 
-                print(
-                    'Epoch validation: {} | Iteration: {} | Classification loss: {:1.5f} | Regression loss: {:1.5f} | Running loss: {:1.5f}'.format(
-                        epoch_num, iter_num, float(classification_loss), float(regression_loss), np.mean(epoch_loss_validation)))
+        #         print(
+        #             'Epoch validation: {} | Iteration: {} | Classification loss: {:1.5f} | Regression loss: {:1.5f} | Running loss: {:1.5f}'.format(
+        #                 epoch_num, iter_num, float(classification_loss), float(regression_loss), np.mean(epoch_loss_validation)))
 
-                del classification_loss
-                del regression_loss
+        #         del classification_loss
+        #         del regression_loss
             
-        et1 = time.time()
-        print("\n Total Time - {}\n".format(int(et1 - st1)))
+        # et1 = time.time()
+        # print("\n Total Time - {}\n".format(int(et1 - st1)))
 
         # Save Model after each epoch
         print('Evaluating dataset')
