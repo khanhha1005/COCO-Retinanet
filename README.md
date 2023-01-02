@@ -16,4 +16,4 @@ retinanet = model.resnet50(num_classes=dataset_train.num_classes(),)
 retinanet.load_state_dict(torch.load(PATH_TO_WEIGHTS))
 ```
 ## Inference
-Using the  , to run the detection of the model 
+Using the  inference_model.ipynb , to run the detection of the model 
