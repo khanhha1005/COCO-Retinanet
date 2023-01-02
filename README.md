@@ -9,7 +9,7 @@ python coco_validation.py --coco_path ~/path/to/coco --model_path path/to/model.
 ```
 ## Weight for the Retina model 
 Weight for model(100_epoch-batch_size_2-resnet_50) 
-- https://drive.google.com/open?id=1yLmjq3JtXi841yXWBxst0coAgR26MNBS 
+- weight.pt
 
 
 The state dict model can be loaded using:
