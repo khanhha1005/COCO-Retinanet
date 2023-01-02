@@ -5,7 +5,7 @@ python train.py --dataset coco --coco_path ../coco
 ```
 ## Testing 
 ```
-python coco_validation.py --coco_path ~/path/to/coco --model_path path/to/model.pt
+python test.py --coco_path ~/path/to/coco --model_path path/to/model.pt
 ```
 ## Weight for the Retina model 
 Weight for model(100_epoch-batch_size_2-resnet_50) in the file weight.pt
