@@ -40,3 +40,4 @@ retinanet.load_state_dict(torch.load(PATH_TO_WEIGHTS))
 ```
 ## Inference
 Using the  inference_model.ipynb , to run the detection of the model 
+## Some demo of the training and testing also in the  inference_model.ipynb
